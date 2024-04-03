@@ -48,12 +48,6 @@ var circle = L.circle([-8.8008012, 115.1612023], {
 }).addTo(map);
 
 circle.bindPopup("Danger Area!");
-
-// var locations = [
-//     {lat: -8.678399, lng: 115.214287, name: 'Rumah Sakit Prima Medika'},
-//     {lat: -8.7098015, lng: 115.2074638, name: 'Bali International Hospital'}
-// ];
-
 const firebaseConfig = {
     apiKey: "AIzaSyDfwI3e0KJTEfkr-wgr4x85Vqf-7o1O9R0",
     authDomain: "geographic-task-b435f.firebaseapp.com",
@@ -70,6 +64,8 @@ let database = firebase.database();
 
 database.ref("rumah_sakit_place").on("value", getData);
 
+var nameRumahSakit = null;
+
 function getData(snapshoot) {
     snapshoot.forEach((element) => {
         var data = element.val();
@@ -79,7 +75,7 @@ function getData(snapshoot) {
             iconSize: [35, 40],
             iconAnchor: [16, 10],
         });
-
+   
         var marker = L.marker([data.latitude, data.longitude],{
             icon: myIcon
             }).addTo(map);
@@ -101,45 +97,51 @@ function getData(snapshoot) {
         // Add a click event listener to the marker
         marker.on('click', function() {
             showOverlay();
+            nameRumahSakit = data.name;
+            id_state = 1;
+            document.getElementById("delete").addEventListener("click", function() {
+                database.ref("rumah_sakit_place").orderByChild("name").equalTo(nameRumahSakit).once("value", function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        // Mendapatkan referensi ke data yang cocok
+                        var dataRef = childSnapshot.ref;
+                
+                        // Menghapus data
+                        dataRef.remove()
+                            .then(function() {
+                                console.log("Data berhasil dihapus");
+                                location.reload(); 
+                            })
+                            .catch(function(error) {
+                                console.error("Error menghapus data:", error);
+                            });
+                    });
+                });
+            });
+
+            localStorage.setItem('nameRumahSakit', nameRumahSakit);
+            localStorage.setItem('id_state', id_state);
         });
 
         // Close the overlay when clicking outside of it
         window.addEventListener('click', function(event) {
-            if (event.target == document.getElementById('overlay')) {
+            if (event.target == document.getElementById('overlay') || event.target == document.getElementById('overlayImage') || event.target == document.getElementById('overlayTitle') || event.target == document.getElementById('overlayDescription')) {
                 hideOverlay();
             }
         });
     });
 }
 
-// locations.forEach(location => {
-//     var marker = L.marker([location.lat, location.lng]).addTo(map);
-//     marker.bindPopup(location.name).openPopup();;
+document.getElementById("edit").addEventListener("click", function() {
+    window.location.href = "editaddmap.html";
+});
 
-//     // Function to show the overlay
-//     function showOverlay() {
-//         document.getElementById('overlayTitle').textContent = location.name;
-//         document.getElementById('overlayDescription').textContent = location.lat, location.lng;
-//         document.getElementById('overlay').style.display = 'block';
-//     }
-
-//     // Function to hide the overlay
-//     function hideOverlay() {
-//         document.getElementById('overlay').style.display = 'none';
-//     }
-
-//     // Add a click event listener to the marker
-//     marker.on('click', function() {
-//         showOverlay();
-//     });
-
-//     // Close the overlay when clicking outside of it
-//     window.addEventListener('click', function(event) {
-//         if (event.target == document.getElementById('overlay')) {
-//             hideOverlay();
-//         }
-//     });
-// });
+document.getElementById("fab").addEventListener("click", function() {
+    nameRumahSakit = null;
+    id_state = 0
+    localStorage.setItem('nameRumahSakit', nameRumahSakit);
+    localStorage.setItem('id_state', id_state);
+    window.location.href = "editaddmap.html";
+});
 
 window.onscroll = function() {scrollFunction()};
     

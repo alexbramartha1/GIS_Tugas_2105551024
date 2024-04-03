@@ -15,15 +15,22 @@
     <div id="additionalDiv"> 
          <h1>Hospital in Bali</h1>
     </div>
-
+    
     <button id="scrollToTopBtn" onclick="scrollToTop()">Scroll To Top</button>
 
-    <div id="map"></div>
+    <div class="map-container">
+        <div id="map"></div>
+        <button id="fab" class="fab">+</button>
+    </div>
 
     <div id="overlay" class="overlay">
         <img id="overlayImage" src="##" alt="">    
         <h2 id="overlayTitle">Marker Details</h2>
         <p id="overlayDescription">This is some information about the marker.</p>
+        <div id="button" class="btn-left-right">
+            <button id="edit" >Edit Marker Information</button>
+            <button id="delete">Delete Marker</button>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
