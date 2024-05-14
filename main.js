@@ -1,4 +1,8 @@
-var map = L.map('map').setView([-8.8008012, 115.1612023], 10);
+const token = localStorage.getItem('token')
+if (token == ""){
+    window.location.href = "login.html"
+} else {
+    var map = L.map('map').setView([-8.8008012, 115.1612023], 10);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 100,
@@ -143,6 +147,11 @@ document.getElementById("fab").addEventListener("click", function() {
     window.location.href = "editaddmap.html";
 });
 
+document.getElementById("logout").addEventListener("click", function() {
+    localStorage.setItem('token', "")
+    window.location.href = "login.html"
+});
+
 window.onscroll = function() {scrollFunction()};
     
 function scrollFunction() {
@@ -158,3 +167,6 @@ function scrollToTop() {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
+}
+
+

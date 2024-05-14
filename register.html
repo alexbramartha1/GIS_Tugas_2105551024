@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/> 
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <div class="container">
+       <div class="text">
+          Register
+       </div>
+
+       <form action="#" id="dataForm">
+           <div class="form-row">
+               <div class="input-data">
+                   <input type="text" required id="inputUsername">
+                   <div class="underline"></div>
+                   <label for="">Username</label>
+               </div>
+           </div>
+           <div class="form-row">
+                <div class="input-data">
+                    <input type="text" required id="inputEmail">
+                    <span id="emailError" style="color: red;"></span><br>
+                    <div class="underline"></div>
+                    <label for="">Email</label>
+                </div>
+            </div>
+           <div class="form-row">
+               <div class="input-data">
+                   <input type="password" required id="inputPassword">
+                   <span id="passwordError" style="color: red;"></span><br>
+                   <div class="underline"></div>
+                   <label for="">Password</label>
+                   <br/>
+               </div>
+           </div>
+            <div class="form-row submit-btn">
+                <input id="submit" type="submit" value="Register">
+            </div>
+            <center>
+                <p>Sudah punya akun? Yuk <a href="login.html">Login</a>!</p>
+            </center>
+            <br><br>
+       </form>
+   </div>
+
+   <script src="register.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+
+
+</body>
+</html>
